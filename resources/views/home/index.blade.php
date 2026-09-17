@@ -63,7 +63,7 @@
                     Começar agora
                 </a>
 
-                <a href="#" class="btn-secondary">
+                <a href="{{ route('recipes.index') }}" class="btn-secondary">
                     Explorar receitas
                 </a>
 
