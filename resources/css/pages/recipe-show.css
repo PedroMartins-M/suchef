@@ -1,0 +1,146 @@
+.recipe-show-page {
+    min-height: 100vh;
+    background: var(--milk);
+}
+
+.recipe-show-content {
+    width: min(1100px, 86%);
+    margin: 0 auto;
+    padding: 50px 0 100px;
+}
+
+.back-link {
+    display: inline-block;
+    margin-bottom: 35px;
+
+    color: var(--gray);
+    font-weight: 600;
+}
+
+.back-link:hover {
+    color: var(--orange);
+}
+
+.recipe-show-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+}
+
+.recipe-show-image {
+    min-height: 500px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: var(--radius-lg);
+
+    background: #d8d0cc;
+
+    color: var(--gray);
+    font-weight: 700;
+}
+
+.recipe-show-info h1 {
+    margin: 10px 0 20px;
+
+    font-size: clamp(3rem, 5vw, 5rem);
+    line-height: 0.95;
+    letter-spacing: -3px;
+}
+
+.recipe-description {
+    max-width: 550px;
+
+    margin-bottom: 35px;
+
+    color: var(--gray);
+
+    font-size: 1.05rem;
+    line-height: 1.6;
+}
+
+.recipe-details {
+    display: flex;
+    gap: 35px;
+
+    margin-bottom: 35px;
+}
+
+.recipe-details div {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.recipe-details strong {
+    font-size: 1.15rem;
+}
+
+.recipe-details span {
+    color: var(--gray);
+    font-size: 0.8rem;
+}
+
+.start-recipe {
+    padding: 15px 25px;
+
+    border: none;
+    border-radius: 999px;
+
+    background: var(--orange);
+    color: var(--white);
+
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.start-recipe:hover {
+    background: var(--orange-dark);
+}
+
+.recipe-section {
+    max-width: 750px;
+    margin-top: 80px;
+}
+
+.recipe-section h2 {
+    margin-bottom: 25px;
+
+    font-size: 2rem;
+}
+
+.ingredients-list,
+.steps-list {
+    padding-left: 25px;
+
+    color: var(--gray);
+
+    line-height: 2;
+}
+
+.steps-list li {
+    padding-left: 8px;
+    margin-bottom: 10px;
+}
+
+@media (max-width: 800px) {
+
+    .recipe-show-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .recipe-show-image {
+        min-height: 350px;
+    }
+
+    .recipe-details {
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+
+}

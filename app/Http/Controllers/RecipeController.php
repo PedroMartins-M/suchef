@@ -10,4 +10,8 @@ class RecipeController
     {
         return view('recipes.index');
     }
+
+    public function show($slug) {
+        return view('recipes.show');
+    }
 }

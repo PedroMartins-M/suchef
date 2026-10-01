@@ -8,3 +8,6 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/receitas', [RecipeController::class, 'index'])
     ->name('recipes.index');
+
+Route::get('/receitas/{slug}', [RecipeController::class, 'show'])
+    ->name('recipes.show');

@@ -62,7 +62,7 @@
             </p>
 
         </div>
-
+  
 
         <div class="recipe-search">
 
@@ -105,97 +105,97 @@
 
         <section class="recipes-grid">
 
-            <article class="recipe-card">
+    <a href="{{ route('recipes.show', 'macarrao-especial') }}" class="recipe-card">
 
-                <div class="recipe-image">
-                    Imagem
-                </div>
+        <div class="recipe-image">
+            Imagem
+        </div>
 
-                <div class="recipe-info">
+        <div class="recipe-info">
 
-                    <span class="recipe-category">
-                        Massas
-                    </span>
+            <span class="recipe-category">
+                Massas
+            </span>
 
-                    <h2>
-                        Macarrão especial
-                    </h2>
+            <h2>
+                Macarrão especial
+            </h2>
 
-                    <p>
-                        Uma receita simples e saborosa.
-                    </p>
+            <p>
+                Uma receita simples e saborosa.
+            </p>
 
-                    <div class="recipe-meta">
-                        <span>30 min</span>
-                        <span>Fácil</span>
-                    </div>
+            <div class="recipe-meta">
+                <span>30 min</span>
+                <span>Fácil</span>
+            </div>
 
-                </div>
+        </div>
 
-            </article>
-
-
-            <article class="recipe-card">
-
-                <div class="recipe-image">
-                    Imagem
-                </div>
-
-                <div class="recipe-info">
-
-                    <span class="recipe-category">
-                        Doces
-                    </span>
-
-                    <h2>
-                        Bolo de chocolate
-                    </h2>
-
-                    <p>
-                        Clássico, simples e perfeito.
-                    </p>
-
-                    <div class="recipe-meta">
-                        <span>45 min</span>
-                        <span>Médio</span>
-                    </div>
-
-                </div>
-
-            </article>
+    </a>
 
 
-            <article class="recipe-card">
+    <a href="{{ route('recipes.show', 'hamburguer-artesanal') }}" class="recipe-card">
 
-                <div class="recipe-image">
-                    Imagem
-                </div>
+        <div class="recipe-image">
+            Imagem
+        </div>
 
-                <div class="recipe-info">
+        <div class="recipe-info">
 
-                    <span class="recipe-category">
-                        Carnes
-                    </span>
+            <span class="recipe-category">
+                Carnes
+            </span>
 
-                    <h2>
-                        Hambúrguer artesanal
-                    </h2>
+            <h2>
+                Hambúrguer artesanal
+            </h2>
 
-                    <p>
-                        Uma opção para preparar em casa.
-                    </p>
+            <p>
+                Uma opção para preparar em casa.
+            </p>
 
-                    <div class="recipe-meta">
-                        <span>25 min</span>
-                        <span>Médio</span>
-                    </div>
+            <div class="recipe-meta">
+                <span>25 min</span>
+                <span>Médio</span>
+            </div>
 
-                </div>
+        </div>
 
-            </article>
+    </a>
 
-        </section>
 
+    <a href="{{ route('recipes.show', 'bolo-de-chocolate') }}" class="recipe-card">
+
+        <div class="recipe-image">
+            Imagem
+        </div>
+
+        <div class="recipe-info">
+
+            <span class="recipe-category">
+                Doces
+            </span>
+
+            <h2>
+                Bolo de chocolate
+            </h2>
+
+            <p>
+                Clássico, simples e perfeito.
+            </p>
+
+            <div class="recipe-meta">
+
+                <span>45 min</span>
+                <span>Médio</span>
+            </div>
+
+        </div>
+
+    </a>
+
+</section>
     </main>
 
 </div>
