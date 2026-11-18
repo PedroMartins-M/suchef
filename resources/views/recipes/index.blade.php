@@ -4,198 +4,185 @@
 
 @section('content')
 
-<div class="recipes-page">
+<div class="app-layout">
 
-    <nav class="navbar">
+    @include('components.sidebar')
 
-        <a href="{{ route('home') }}" class="logo">
-            Su<span>Chef</span>
-        </a>
+    <main class="app-main">
 
-        <ul class="nav-links">
+        <header class="topbar">
+            <span>SuChef / Explorar receitas</span>
 
-            <li>
-                <a href="{{ route('recipes.index') }}">
-                    Explorar
-                </a>
-            </li>
+            <a href="{{ route('recipes.create') }}" class="topbar-button">
+                + Nova receita
+            </a>
+        </header>
 
-            <li>
-                <a href="#">
-                    Comunidade
-                </a>
-            </li>
-
-            <li>
-                <a href="#">
-                    Desafios
-                </a>
-            </li>
-
-            <li>
-                <a href="#" class="nav-login">
-                    Entrar
-                </a>
-            </li>
-
-        </ul>
-
-    </nav>
-
-
-    <main class="recipes-content">
-
-        <div class="recipes-header">
-
-            <span class="recipes-label">
-                DESCUBRA
-            </span>
+        <section class="page-heading">
+            <span class="eyebrow">DESCUBRA NOVOS SABORES</span>
 
             <h1>
                 Explorar receitas<span>.</span>
             </h1>
 
             <p>
-                Encontre algo novo para preparar,
-                compartilhe suas criações e descubra
-                receitas da comunidade.
+                Encontre algo novo para preparar, compartilhe suas
+                criações e descubra receitas da comunidade.
             </p>
+        </section>
 
-        </div>
-  
-
-        <div class="recipe-search">
+        <form action="{{ route('recipes.index') }}" method="GET"
+              class="recipe-search">
 
             <input
                 type="text"
+                name="q"
                 placeholder="Buscar receitas..."
+                value="{{ request('q') }}"
             >
 
-            <button type="button">
-                Buscar
-            </button>
+            @if(request('category'))
+                <input type="hidden" name="category"
+                       value="{{ request('category') }}">
+            @endif
 
-        </div>
-
+            <button type="submit">Buscar</button>
+        </form>
 
         <div class="categories">
 
-            <button class="category active">
+            <a
+                href="{{ route('recipes.index', ['q' => request('q')]) }}"
+                class="category {{ !request('category') ? 'active' : '' }}"
+            >
                 Todas
-            </button>
+            </a>
 
-            <button class="category">
-                Massas
-            </button>
+            @foreach($categories as $category)
 
-            <button class="category">
-                Carnes
-            </button>
+                <a
+                    href="{{ route('recipes.index', [
+                        'q' => request('q'),
+                        'category' => $category->slug
+                    ]) }}"
+                    class="category {{
+                        request('category') === $category->slug
+                        ? 'active'
+                        : ''
+                    }}"
+                >
+                    {{ $category->name }}
+                </a>
 
-            <button class="category">
-                Doces
-            </button>
-
-            <button class="category">
-                Bebidas
-            </button>
+            @endforeach
 
         </div>
 
+        <section class="recipes-results">
 
-        <section class="recipes-grid">
+            <div class="results-heading">
+                <h2>Receitas disponíveis</h2>
 
-    <a href="{{ route('recipes.show', 'macarrao-especial') }}" class="recipe-card">
-
-        <div class="recipe-image">
-            Imagem
-        </div>
-
-        <div class="recipe-info">
-
-            <span class="recipe-category">
-                Massas
-            </span>
-
-            <h2>
-                Macarrão especial
-            </h2>
-
-            <p>
-                Uma receita simples e saborosa.
-            </p>
-
-            <div class="recipe-meta">
-                <span>30 min</span>
-                <span>Fácil</span>
+                <span>
+                    {{ $recipes->count() }}
+                    {{ $recipes->count() === 1 ? 'receita' : 'receitas' }}
+                </span>
             </div>
 
-        </div>
+            <div class="recipes-grid">
 
-    </a>
+                @forelse($recipes as $recipe)
 
+                    <a
+                        href="{{ route('recipes.show', $recipe->slug) }}"
+                        class="recipe-card"
+                    >
 
-    <a href="{{ route('recipes.show', 'hamburguer-artesanal') }}" class="recipe-card">
+                        <div class="recipe-image">
 
-        <div class="recipe-image">
-            Imagem
-        </div>
+                            @if($recipe->image)
 
-        <div class="recipe-info">
+                                <img
+                                    src="{{ asset('storage/' . $recipe->image) }}"
+                                    alt="{{ $recipe->title }}"
+                                >
 
-            <span class="recipe-category">
-                Carnes
-            </span>
+                            @else
 
-            <h2>
-                Hambúrguer artesanal
-            </h2>
+                                <span>SuChef</span>
 
-            <p>
-                Uma opção para preparar em casa.
-            </p>
+                            @endif
 
-            <div class="recipe-meta">
-                <span>25 min</span>
-                <span>Médio</span>
+                        </div>
+
+                        <div class="recipe-info">
+
+                            <span class="recipe-category">
+                                {{ $recipe->category->name ?? 'Sem categoria' }}
+                            </span>
+
+                            <h2>{{ $recipe->title }}</h2>
+
+                            <p>
+                                {{ $recipe->description ?? 'Uma receita para experimentar.' }}
+                            </p>
+
+                            <div class="recipe-meta">
+
+                                <span>
+                                    {{ ($recipe->preparation_time ?? 0) + ($recipe->cooking_time ?? 0) }}
+                                    min
+                                </span>
+
+                                <span>
+                                    @switch($recipe->difficulty)
+                                        @case('easy')
+                                            Fácil
+                                            @break
+
+                                        @case('medium')
+                                            Médio
+                                            @break
+
+                                        @case('hard')
+                                            Difícil
+                                            @break
+
+                                        @default
+                                            Não informado
+                                    @endswitch
+                                </span>
+
+                            </div>
+
+                            <div class="recipe-author">
+                                Por {{ $recipe->user->name ?? 'Usuário SuChef' }}
+                            </div>
+
+                        </div>
+
+                    </a>
+
+                @empty
+
+                    <div class="empty-recipes">
+                        <span>✳</span>
+                        <h3>Nenhuma receita encontrada</h3>
+                        <p>
+                            Tente outra busca ou selecione uma categoria diferente.
+                        </p>
+
+                        <a href="{{ route('recipes.index') }}">
+                            Limpar filtros
+                        </a>
+                    </div>
+
+                @endforelse
+
             </div>
 
-        </div>
+        </section>
 
-    </a>
-
-
-    <a href="{{ route('recipes.show', 'bolo-de-chocolate') }}" class="recipe-card">
-
-        <div class="recipe-image">
-            Imagem
-        </div>
-
-        <div class="recipe-info">
-
-            <span class="recipe-category">
-                Doces
-            </span>
-
-            <h2>
-                Bolo de chocolate
-            </h2>
-
-            <p>
-                Clássico, simples e perfeito.
-            </p>
-
-            <div class="recipe-meta">
-
-                <span>45 min</span>
-                <span>Médio</span>
-            </div>
-
-        </div>
-
-    </a>
-
-</section>
     </main>
 
 </div>

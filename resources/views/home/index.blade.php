@@ -1,78 +1,82 @@
 @extends('layouts.app')
 
-@section('title', 'SuChef — Cozinhe do seu jeito')
+@section('title', 'SuChef — Sua cozinha, seu espaço')
 
 @section('content')
+<div class="app-layout">
 
-<div class="home">
+    @include('components.sidebar')
 
-    <nav class="navbar">
+    <main class="app-main">
 
-        <a href="{{ route('home') }}" class="logo">
-            Su<span>Chef</span>
-        </a>
+        <header class="topbar">
+            <span>SuChef / Início</span>
+            <a href="{{ route('recipes.create') }}" class="topbar-button">
+                + Nova receita
+            </a>
+        </header>
 
-        <ul class="nav-links">
-
-            <li>
-                <a href="#">Explorar</a>
-            </li>
-
-            <li>
-                <a href="#">Comunidade</a>
-            </li>
-
-            <li>
-                <a href="#">Desafios</a>
-            </li>
-
-            <li>
-                <a href="#" class="nav-login">
-                    Entrar
-                </a>
-            </li>
-
-        </ul>
-
-    </nav>
-
-
-    <main class="hero">
-
-        <div class="hero-content">
-
-            <span class="hero-label">
-                Sua cozinha. Seu espaço.
-            </span>
-
-            <h1>
-                Cozinhe.
-                <span>Compartilhe.</span>
-                Experimente.
-            </h1>
-
-            <p class="hero-description">
-                Descubra receitas, compartilhe suas criações,
-                desafie seus amigos e tenha um SuChef ao seu lado
-                quando precisar.
+        <section class="page-heading">
+            <span class="eyebrow">SUA COZINHA. SEU ESPAÇO.</span>
+            <h1>Bem-vindo ao SuChef<span>.</span></h1>
+            <p>
+                Descubra receitas, compartilhe suas criações e explore
+                novas possibilidades na cozinha.
             </p>
+        </section>
 
-            <div class="hero-actions">
+        <section class="home-feature">
+            <div>
+                <span class="eyebrow">EXPLORE NOVOS SABORES</span>
+                <h2>O próximo prato incrível pode começar aqui.</h2>
+                <p>
+                    Encontre inspirações, experimente combinações
+                    e compartilhe suas receitas.
+                </p>
+                <a href="{{ route('recipes.index') }}" class="btn-primary">
+                    Explorar receitas
+                </a>
+            </div>
+        </section>
 
-                <a href="#" class="btn-primary">
-                    Começar agora
+        <section class="home-shortcuts">
+            <h2>O que deseja fazer?</h2>
+
+            <div class="shortcut-grid">
+
+                <a href="{{ route('recipes.index') }}" class="shortcut-card">
+                    <h3>Explorar receitas</h3>
+                    <p>Descubra pratos e novas ideias.</p>
                 </a>
 
-                <a href="{{ route('recipes.index') }}" class="btn-secondary">
-                    Explorar receitas
+                <a href="{{ route('recipes.create') }}" class="shortcut-card">
+                    <h3>Criar receita</h3>
+                    <p>Compartilhe suas criações culinárias.</p>
+                </a>
+
+                <a href="{{ route('community') }}" class="shortcut-card">
+                    <h3>Comunidade</h3>
+                    <p>Conheça outros apaixonados por cozinha.</p>
+                </a>
+
+                <a href="{{ route('challenges') }}" class="shortcut-card">
+                    <h3>Desafios</h3>
+                    <p>Saia da rotina e teste suas habilidades.</p>
+                </a>
+
+                <a href="{{ route('assistant') }}" class="shortcut-card">
+                    <h3>Assistente SuChef</h3>
+                    <p>Encontre ajuda e ideias para cozinhar.</p>
+                </a>
+
+                <a href="{{ route('profile') }}" class="shortcut-card">
+                    <h3>Meu perfil</h3>
+                    <p>Acompanhe seu espaço e suas criações.</p>
                 </a>
 
             </div>
-
-        </div>
+        </section>
 
     </main>
-
 </div>
-
 @endsection

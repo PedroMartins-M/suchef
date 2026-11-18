@@ -1,135 +1,156 @@
 @extends('layouts.app')
 
-@section('title', 'Macarrão especial — SuChef')
+@section('title', $recipe->title . ' | SuChef')
 
 @section('content')
 
-<div class="recipe-show-page">
+<div class="app-layout">
 
-    <nav class="navbar">
+    @include('components.sidebar')
 
-        <a href="{{ route('home') }}" class="logo">
-            Su<span>Chef</span>
+    <main class="app-main recipe-detail-page">
+
+        <header class="topbar">
+            <span>SuChef / Receitas / {{ $recipe->title }}</span>
+
+            <a href="{{ route('recipes.index') }}" class="topbar-button">
+                Voltar às receitas
+            </a>
+        </header>
+
+        <a href="{{ route('recipes.index') }}" class="recipe-back-link">
+            ← Voltar para explorar
         </a>
 
-        <ul class="nav-links">
+        <section class="recipe-detail-hero">
 
-            <li>
-                <a href="{{ route('recipes.index') }}">
-                    Explorar
-                </a>
-            </li>
-
-            <li>
-                <a href="#">
-                    Comunidade
-                </a>
-            </li>
-
-            <li>
-                <a href="#">
-                    Desafios
-                </a>
-            </li>
-
-            <li>
-                <a href="#" class="nav-login">
-                    Entrar
-                </a>
-            </li>
-
-        </ul>
-
-    </nav>
-
-    <main class="recipe-show-content">
-
-        <a href="{{ route('recipes.index') }}" class="back-link">
-            ← Voltar para receitas
-        </a>
-
-        <div class="recipe-show-grid">
-
-            <div class="recipe-show-image">
-                Imagem da receita
+            <div class="recipe-detail-image">
+                @if($recipe->image)
+                    <img
+                        src="{{ asset('storage/' . $recipe->image) }}"
+                        alt="{{ $recipe->title }}"
+                    >
+                @else
+                    <div class="recipe-no-image">
+                        <span>SuChef</span>
+                        <p>Esta receita ainda não possui imagem.</p>
+                    </div>
+                @endif
             </div>
 
-            <div class="recipe-show-info">
+            <div class="recipe-detail-info">
 
                 <span class="recipe-category">
-                    Massas
+                    {{ $recipe->category->name ?? 'Sem categoria' }}
                 </span>
 
-                <h1>
-                    Macarrão especial
-                </h1>
+                <h1>{{ $recipe->title }}</h1>
 
-                <p class="recipe-description">
-                    Uma receita simples, saborosa e perfeita
-                    para preparar em casa.
+                <p class="recipe-detail-description">
+                    {{ $recipe->description ?? 'Uma receita para experimentar e compartilhar.' }}
                 </p>
 
-                <div class="recipe-details">
+                <div class="recipe-detail-meta">
 
                     <div>
-                        <strong>30 min</strong>
-                        <span>Preparo</span>
+                        <strong>
+                            {{ ($recipe->preparation_time ?? 0) + ($recipe->cooking_time ?? 0) }} min
+                        </strong>
+                        <span>Tempo total</span>
                     </div>
 
                     <div>
-                        <strong>2</strong>
+                        <strong>{{ $recipe->servings }}</strong>
                         <span>Porções</span>
                     </div>
 
                     <div>
-                        <strong>Fácil</strong>
+                        <strong>
+                            @switch($recipe->difficulty)
+                                @case('easy') Fácil @break
+                                @case('medium') Médio @break
+                                @case('hard') Difícil @break
+                                @default Não informado
+                            @endswitch
+                        </strong>
                         <span>Dificuldade</span>
                     </div>
 
                 </div>
 
-                <button class="start-recipe">
-                    Começar receita
-                </button>
+                <p class="recipe-detail-author">
+                    Receita publicada por
+                    <strong>{{ $recipe->user->name ?? 'Usuário SuChef' }}</strong>
+                </p>
+
+                <a href="#modo-preparo" class="btn-primary recipe-start-button">
+                    Começar a preparar
+                </a>
 
             </div>
 
-        </div>
+        </section>
 
-        <section class="recipe-section">
+        <section class="recipe-detail-section">
 
-            <h2>Ingredientes</h2>
+            <div class="recipe-detail-section-heading">
+                <span>01</span>
+                <div>
+                    <h2>Ingredientes</h2>
+                    <p>Tudo o que você vai precisar.</p>
+                </div>
+            </div>
 
-            <ul class="ingredients-list">
-                <li>200g de macarrão</li>
-                <li>2 tomates</li>
-                <li>1 dente de alho</li>
-                <li>1 colher de azeite</li>
-                <li>Sal a gosto</li>
+            <ul class="recipe-detail-ingredients">
+
+                @forelse($recipe->ingredients as $ingredient)
+                    <li>
+                        <span class="ingredient-check">✓</span>
+
+                        <span>{{ $ingredient->name }}</span>
+
+                        <strong>
+                            @if($ingredient->pivot->quantity)
+                                {{ $ingredient->pivot->quantity }}
+                            @endif
+
+                            {{ $ingredient->pivot->unit }}
+                        </strong>
+                    </li>
+                @empty
+                    <li>Nenhum ingrediente cadastrado.</li>
+                @endforelse
+
             </ul>
 
         </section>
 
-        <section class="recipe-section">
+        <section class="recipe-detail-section" id="modo-preparo">
 
-            <h2>Modo de preparo</h2>
+            <div class="recipe-detail-section-heading">
+                <span>02</span>
+                <div>
+                    <h2>Modo de preparo</h2>
+                    <p>Siga cada etapa para preparar sua receita.</p>
+                </div>
+            </div>
 
-            <ol class="steps-list">
-                <li>
-                    Cozinhe o macarrão até ficar no ponto desejado.
-                </li>
+            <ol class="recipe-detail-steps">
 
-                <li>
-                    Refogue o alho e os tomates no azeite.
-                </li>
+                @forelse($recipe->steps as $step)
+                    <li>
+                        <span class="step-number">
+                            {{ $step->step_number }}
+                        </span>
 
-                <li>
-                    Misture o molho ao macarrão.
-                </li>
+                        <div>
+                            <p>{{ $step->instruction }}</p>
+                        </div>
+                    </li>
+                @empty
+                    <li>Esta receita ainda não possui etapas cadastradas.</li>
+                @endforelse
 
-                <li>
-                    Ajuste o sal e sirva.
-                </li>
             </ol>
 
         </section>
