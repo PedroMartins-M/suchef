@@ -56,7 +56,14 @@ class SettingsController extends Controller
                 ->store('avatars', 'public');
         }
 
-        unset($data['avatar']);
+        if ($request->hasFile('avatar')) {
+            if ($user->avatar) {
+                Storage::disk('public')->delete($user->avatar);
+            }
+
+            $data['avatar'] = $request->file('avatar')
+                ->store('avatars', 'public');
+        }
 
         $user->fill([
             'name' => $data['name'],
