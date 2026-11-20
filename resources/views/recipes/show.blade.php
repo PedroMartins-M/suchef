@@ -19,7 +19,21 @@
         </header>
 
         <a href="{{ route('recipes.index') }}" class="recipe-back-link">
-            ← Voltar para explorar
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            Voltar para explorar
         </a>
 
         <section class="recipe-detail-hero">

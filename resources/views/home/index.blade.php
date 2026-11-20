@@ -12,7 +12,7 @@
         <header class="topbar">
             <span>SuChef / Início</span>
             <a href="{{ route('recipes.create') }}" class="topbar-button">
-                + Nova receita
+                ''Nova receita
             </a>
         </header>
 
